@@ -1,0 +1,16 @@
+nav form label {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  width: 35px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-part {
+  max-height: 75vh;
+  overflow: auto;
+  background-color: #f8f9fa;
+}

@@ -1,0 +1,136 @@
+<div *ngIf="productDetails" class="row align-items-center">
+  <div class="col-md-6 mb-3 mb-md-0">
+    <div
+      class="row align-items-center justify-content-center g-2 flex-column-reverse flex-md-row"
+    >
+      <div class="col-12 col-md-2 product-images">
+        <div class="row g-3 me-sm-3">
+          <div
+            *ngFor="let image of productDetails?.images?.slice(0, 4)"
+            class="col-3 col-md-12 cursor-pointer"
+          >
+            <img
+              [ngClass]="[image === displayedImage ? 'border-main' : '']"
+              #img
+              (click)="changeDisplayedImage(img)"
+              class="w-100"
+              [src]="image"
+              [alt]="productDetails.title"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10 main-image">
+        <img
+          class="w-100"
+          [src]="displayedImage"
+          [alt]="productDetails.title"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <p class="fw-semibold font-sm">
+      Brand: <span class="fw-normal">{{ productDetails.brand.name }}</span>
+    </p>
+    <p class="fw-semibold font-sm">
+      Category:
+      <span class="fw-normal">{{ productDetails.category.name }}</span>
+    </p>
+    <p class="fw-semibold font-sm">
+      Availability:
+      <span class="fw-normal">Only {{ productDetails.quantity }} in Stock</span>
+    </p>
+    <h2>{{ productDetails.title }}</h2>
+    <div class="rating-container">
+      <p class="stars me-4">
+        <span class="fw-semibold me-2">Rating: </span>
+        <span class="me-2">{{ productDetails.ratingsAverage }}</span>
+        <i
+          [ngClass]="[
+            productDetails.ratingsAverage >= 1 ? 'fa-solid' : 'fa-regular'
+          ]"
+          class="fa-star rating-color"
+        ></i>
+        <i
+          [ngClass]="[
+            productDetails.ratingsAverage >= 2 ? 'fa-solid' : 'fa-regular'
+          ]"
+          class="fa-star rating-color"
+        ></i>
+        <i
+          [ngClass]="[
+            productDetails.ratingsAverage >= 3 ? 'fa-solid' : 'fa-regular'
+          ]"
+          class="fa-star rating-color"
+        ></i>
+        <i
+          [ngClass]="[
+            productDetails.ratingsAverage >= 4 ? 'fa-solid' : 'fa-regular'
+          ]"
+          class="fa-star rating-color"
+        ></i>
+        <i
+          [ngClass]="[
+            productDetails.ratingsAverage >= 5 ? 'fa-solid' : 'fa-regular'
+          ]"
+          class="fa-star rating-color"
+        ></i>
+      </p>
+      <p>
+        <span class="me-2 fw-semibold">Rating Quantity: </span>
+        <i class="fa-solid fa-user me-2"></i>
+        <span class="me-2">{{ productDetails.ratingsQuantity }}</span>
+      </p>
+    </div>
+    <div class="product-description font-sm">
+      <p>{{ productDetails.description }}</p>
+    </div>
+    <div class="price">
+      <p class="h2">{{ productDetails.price | currency : "EGP" }}</p>
+    </div>
+    <div class="discount fw-semibold font-sm">
+      Discount:
+      <span
+        class="bg-secondary rounded rounded-pill text-white px-3 py-1 fw-normal"
+        >0 %</span
+      >
+    </div>
+    <div
+      class="buttons-container d-flex flex-column gap-2 align-items-center justify-content-around"
+    >
+      <div class="add-buttons">
+        <button
+          *ngIf="isLoading"
+          type="button"
+          class="mt-4 px-4 py-1 btn bg-main rounded-pill text-white d-block mx-auto font-sm"
+        >
+          <i class="fa-solid fa-spinner fa-spin"></i>
+        </button>
+        <button
+          *ngIf="!isLoading"
+          (click)="addToCart(productDetails._id)"
+          type="button"
+          class="mt-4 px-4 py-1 btn bg-main rounded-pill text-white d-block mx-auto font-sm"
+        >
+          Add To Cart <i class="fa-solid fa-shopping-cart"></i>
+        </button>
+      </div>
+      <button
+        *ngIf="!isWishLoading"
+        (click)="addToWishList(productDetails.title, productDetails._id)"
+        type="button"
+        class="wish-list btn bg-transparent border-main rounded-pill text-main d-block mx-auto font-sm"
+      >
+        Wishlist <i class="fa-regular fa-heart"></i>
+      </button>
+      <button
+        *ngIf="isWishLoading"
+        type="button"
+        class="btn bg-wishlist border-0 rounded-pill text-white d-block mx-auto font-sm"
+      >
+        <i class="fa-regular fa-heart animate__heartBeat"></i>
+      </button>
+    </div>
+  </div>
+</div>

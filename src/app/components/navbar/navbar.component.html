@@ -1,0 +1,155 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top z-3">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="home">
+      <img src="assets/images/freshcart-logo.svg" alt="" />
+    </a>
+    <button
+      class="navbar-toggler d-lg-none"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapsibleNavId"
+      aria-controls="collapsibleNavId"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+      <ul
+        *ngIf="isLoggedIn"
+        class="navbar-nav me-auto mt-2 mt-lg-0 text-center"
+      >
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/home"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/products"
+            >Products</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/categories"
+            >Categories</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" routerLink="/brands"
+            >Brands</a
+          >
+        </li>
+      </ul>
+    </div>
+    <ul *ngIf="isLoggedIn" class="navbar-nav mx-auto mt-2 mt-lg-0">
+      <form
+        class="d-flex my-2 my-lg-0 position-relative rounded rounded-pill border-main overflow-hidden"
+      >
+        <label for="navSearch">
+          <i class="fa-solid fa-search"></i>
+        </label>
+        <input
+          #input
+          (keyup)="searchquery(input)"
+          class="form-control border-0"
+          type="text"
+          placeholder="Search"
+          id="navSearch"
+        />
+      </form>
+    </ul>
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+      <ul class="navbar-nav ms-auto mt-2 mt-lg-0 text-center">
+        <li
+          *ngIf="isLoggedIn"
+          class="nav-item cursor-pointer d-flex justify-content-around"
+        >
+          <a [matMenuTriggerFor]="menu" class="nav-link">
+            <i class="fa-solid fs-5 fa-user-circle"> </i>
+          </a>
+          <mat-menu #menu="matMenu">
+            <a routerLink="/allorders" mat-menu-item>My orders</a>
+          </mat-menu>
+          <a class="nav-link" routerLink="/wishlist">
+            <i class="fa-solid fs-5 fa-heart-circle-check">
+              <span
+                *ngIf="wishListItems"
+                [matBadge]="wishListItems"
+                matBadgePosition="above after"
+                matBadgeColor="warn"
+                matBadgeSize="small"
+              ></span>
+            </i>
+          </a>
+          <a class="nav-link" routerLink="/cart">
+            <i class="fa-solid fs-5 fa-cart-shopping">
+              <span
+                *ngIf="cartItems"
+                [matBadge]="cartItems"
+                matBadgePosition="above after"
+                matBadgeColor="warn"
+                matBadgeSize="small"
+              ></span
+            ></i>
+          </a>
+        </li>
+        <li *ngIf="!isLoggedIn" class="nav-item">
+          <a class="nav-link" routerLink="/register">Register</a>
+        </li>
+        <li *ngIf="!isLoggedIn" class="nav-item">
+          <a class="nav-link" routerLink="/login">Signin</a>
+        </li>
+        <li
+          (click)="logOut()"
+          *ngIf="isLoggedIn"
+          class="nav-item cursor-pointer"
+        >
+          <a class="nav-link">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    *ngIf="showSearch"
+    class="search-part position-absolute top-100 start-0 w-75 mx-auto end-0 p-3 border-2 rounded-bottom-3 border-bottom border-start border-end"
+  >
+    <h2 (click)="showSearch = false" class="text-center cursor-pointer">
+      <i class="fa-solid fa-close"></i> Close Search
+    </h2>
+    <div class="row g-3">
+      <div
+        *ngFor="let product of products | search : searchValue"
+        class="col-md-3"
+      >
+        <div
+          class="d-block product cursor-pointer overflow-hidden border-main rounded-3 position-relative"
+        >
+          <a
+            (click)="showSearch = false"
+            [routerLink]="['/productdetails', product._id]"
+            ><img
+              class="w-100"
+              src="{{ product.imageCover }}"
+              alt="{{ product.slug }}"
+            />
+            <h2 class="h6 text-center">
+              {{ product.title.split(" ").splice(0, 2).join(" ") }}
+            </h2>
+            <p class="font-sm text-center">
+              Category:
+              <span
+                class="font-vsm text-white px-3 py-2 rounded-pill bg-secondary"
+                >{{ product.category.name }}</span
+              >
+            </p>
+            <div
+              class="price-rating px-2 text-center"
+            >
+              <p>{{ product.price | currency : "EGP" }}</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,48 @@
+<div class="row g-3">
+  <div *ngFor="let brand of brandList" class="col-md-4">
+    <div
+      (click)="goToCategory(brand.name, brand._id)"
+      class="card cursor-pointer rounded rounded-2 overflow-hidden border border-1"
+    >
+      <div class="card-img">
+        <img class="w-100" [src]="brand.image" [alt]="brand.name" />
+      </div>
+      <div class="card-body text-center h3">
+        <p>{{ brand.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="pages.length > 0" class="pagination-nav mt-4">
+  <ul class="pagination d-flex justify-content-center">
+    <li
+      (click)="goToPreviousPage()"
+      *ngIf="currentPage !== 1"
+      class="page-item cursor-pointer"
+    >
+      <a class="page-link text-main">
+        <span>&laquo;</span>
+      </a>
+    </li>
+    <li
+      (click)="goToPage(page)"
+      *ngFor="let page of pages"
+      class="page-item cursor-pointer"
+    >
+      <a
+        [ngClass]="{ 'current-page': page === currentPage }"
+        class="page-link text-main"
+        >{{ page }}</a
+      >
+    </li>
+    <li
+      (click)="goToNextPage()"
+      *ngIf="currentPage !== numberOfPages"
+      class="page-item cursor-pointer"
+    >
+      <a class="page-link text-main">
+        <span>&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</div>

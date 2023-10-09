@@ -1,0 +1,170 @@
+@import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap");
+:root {
+  --main-color: #0aad0a;
+  --light-color: #f0f3f2;
+  --shadow: rgba(145, 158, 171, 0.2) 0px 2px 4px -1px,
+    rgba(145, 158, 171, 0.14) 0px 4px 5px 0px,
+    rgba(145, 158, 171, 0.12) 0px 1px 10px 0px;
+  --font-family: "Encode Sans Expanded", sans-serif;
+  --rating-color: #ffc908;
+  --wish-color: rgb(255, 114, 114);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family) !important;
+}
+
+a,
+a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.show-password-padding {
+  padding: 0.75rem;
+}
+
+.rating-color {
+  color: var(--rating-color);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.font-sm {
+  font-size: 14px;
+}
+
+.font-vsm {
+  font-size: 8px;
+}
+
+.text-main {
+  color: var(--main-color);
+}
+.bg-main {
+  background-color: var(--main-color) !important;
+}
+.bg-main-light {
+  background-color: var(--light-color) !important;
+}
+
+.border-main {
+  border: 1px solid var(--main-color);
+}
+
+.current-page {
+  background-color: #f8f9fa !important;
+}
+
+.wish-list {
+  transition: all 0.3s ease-in-out;
+}
+
+.wish-list:hover {
+  background-color: var(--wish-color) !important;
+  color: #fff;
+}
+
+.btn[disabled] {
+  background-color: gray !important;
+}
+
+.wish-list:active {
+  color: white !important;
+  background-color: var(--wish-color) !important;
+  border-color: transparent !important;
+}
+
+.bg-wishlist {
+  background-color: var(--wish-color) !important;
+}
+
+.product {
+  transition: all 0.3s ease-in-out;
+}
+
+.product:hover {
+  scale: 1.01;
+  box-shadow: 0 25px 35px -5px rgba(0, 0, 0, 0.1);
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+  background-color: var(--main-color);
+}
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus {
+  box-shadow: none;
+}
+
+.mat-step-icon-selected {
+  background-color: var(--main-color) !important;
+}
+
+.mat-step-icon-state-edit {
+  background-color: var(--main-color) !important;
+}
+
+.mat-step-icon-state-done {
+  background-color: var(--main-color) !important;
+}
+
+.page-link:hover {
+  color: var(--main-color) !important;
+}
+
+.progress-bar {
+  background-color: var(--main-color);
+}
+
+.card {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+  box-shadow: 1px 1px 10px #4fa74f;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-color) #dfe9eb;
+}
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+*::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #dfe9eb;
+}
+
+*::-webkit-scrollbar-track:hover {
+  background-color: #b8c0c2;
+}
+
+*::-webkit-scrollbar-track:active {
+  background-color: #b8c0c2;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: var(--main-color);
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--main-color);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: #62a34b;
+}

@@ -1,0 +1,15 @@
+<div class="row g-3">
+  <div *ngFor="let category of categoriesList" class="col-md-4">
+    <div
+      (click)="goToCategory(category.name, category._id)"
+      class="card cursor-pointer rounded rounded-2 overflow-hidden border border-1"
+    >
+      <div class="card-img">
+        <img class="w-100" [src]="category.image" [alt]="category.name" />
+      </div>
+      <div class="card-body text-center h3">
+        <p>{{ category.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>

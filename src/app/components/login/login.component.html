@@ -1,0 +1,67 @@
+<h2 class="text-center mb-5">
+  Please Enter Your Account Info To Login
+  <i class="fa-solid fa-cart-shopping text-main"></i>
+</h2>
+<form class="row" [formGroup]="logInForm" (ngSubmit)="handleLogin(logInForm)">
+  <div class="col-md-12 mb-4">
+    <p>Account Info</p>
+    <div class="email-field text-center mb-2">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Please enter your email</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="example:user@email.com"
+          formControlName="email"
+        />
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="logInForm.get('email')?.getError('required')"
+          >email is required</mat-error
+        >
+        <mat-error *ngIf="logInForm.get('email')?.getError('email')"
+          >please enter a valid email</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="password-field text-center mb-2">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Please enter a password</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          formControlName="password"
+        />
+        <button
+          type="button"
+          class="border-0 bg-transparent show-password-padding"
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
+        <mat-error *ngIf="logInForm.get('password')?.getError('required')"
+          >password is required</mat-error
+        >
+        <mat-error *ngIf="logInForm.get('password')?.getError('pattern')"
+          >Password must be at least 6 characters long, start with a capital
+          letter, and contain at least 2 numbers.</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div
+      class="button-container d-flex align-items-center justify-content-between"
+    >
+      <a class="btn bg-main text-white border-0" routerLink="/forgotpassword"
+        >Forgot Password ?</a
+      >
+      <button
+        class="btn bg-main text-white border-0"
+        [disabled]="!logInForm.valid"
+      >
+        SignIn
+      </button>
+    </div>
+  </div>
+</form>

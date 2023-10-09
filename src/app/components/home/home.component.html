@@ -1,0 +1,43 @@
+<div class="main-slider">
+  <owl-carousel-o [options]="customOptions">
+    <ng-template carouselSlide
+      ><img
+        class="slider-img"
+        src="assets/images/slider-1.jpg"
+        alt="slider-image"
+    /></ng-template>
+    <ng-template carouselSlide
+      ><img
+        class="slider-img"
+        src="assets/images/slider-2.jpg"
+        alt="slider-image"
+    /></ng-template>
+    <ng-template carouselSlide
+      ><img
+        class="slider-img"
+        src="assets/images/slider-3.jpg"
+        alt="slider-image"
+    /></ng-template>
+    <ng-template carouselSlide
+      ><img
+        class="slider-img"
+        src="assets/images/slider-4.jpg"
+        alt="slider-image"
+    /></ng-template>
+  </owl-carousel-o>
+</div>
+<div class="categories-slider mb-4">
+  <owl-carousel-o [options]="customOptions2">
+    <ng-container *ngFor="let category of categoriesList">
+      <ng-template carouselSlide [id]="category._id">
+        <img
+          [src]="category.image"
+          [alt]="category.name"
+          [title]="category.name"
+        />
+      </ng-template>
+    </ng-container>
+  </owl-carousel-o>
+</div>
+<h2 class="text-center">Products</h2>
+<app-products></app-products>

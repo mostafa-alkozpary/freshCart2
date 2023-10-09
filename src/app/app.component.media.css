@@ -1,0 +1,6 @@
+@media screen and (max-width: 768px) {
+  .padding-container {
+    padding-top: 9rem;
+    padding-bottom: 9rem;
+  }
+}

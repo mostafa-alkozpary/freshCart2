@@ -1,0 +1,94 @@
+<ng-template #noOrders>
+  <div class="py-3 bg-secondary-subtle text-center">
+    <span class="h5 d-block mb-2">
+      <i class="fa-solid fa-truck-fast"></i>
+      No orders</span
+    >
+    <a class="btn bg-main text-white py-2 px-3" routerLink="/home"
+      >Continue Shopping <i class="fa-solid fa-shopping-cart"></i
+    ></a>
+  </div>
+</ng-template>
+
+<div *ngIf="allOrders.length > 0; else noOrders" class="orders-container">
+  <h2 class="text-center">
+    <i class="fa-solid fa-truck-fast"></i>
+    My orders
+  </h2>
+  <div
+    *ngFor="let order of allOrders; let i = index"
+    class="content text-center mb-4"
+  >
+    <div class="order-details">
+      <p class="h4">Order: {{ i + 1 }}</p>
+      <p class="fw-semibold">Created at: {{ order.createdAt | date }}</p>
+      <p>
+        Payment Method : {{ order.paymentMethodType }}
+        <span
+          *ngIf="order.isPaid"
+          class="bg-main px-2 py-1 rounded rounded-pill"
+          >paid</span
+        >
+        <span
+          *ngIf="!order.isPaid"
+          class="bg-secondary-subtle px-2 py-1 rounded rounded-pill"
+          >not paid</span
+        >
+      </p>
+      <p>
+        Delivered :
+        <span
+          *ngIf="order.isDelivered"
+          class="bg-main px-2 py-1 rounded rounded-pill"
+          >delivered</span
+        >
+        <span
+          *ngIf="!order.isDelivered"
+          class="bg-secondary-subtle px-2 py-1 rounded rounded-pill"
+          >not delivered</span
+        >
+      </p>
+      <p>Total order price: {{ order.totalOrderPrice | currency : "EGP" }}</p>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped text-center table-responsive-sm">
+        <thead class="table-secondary">
+          <tr>
+            <th></th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="align-middle" *ngFor="let product of order.cartItems">
+            <td>
+              <div class="image-container">
+                <img
+                  class="w-100"
+                  [src]="product.product.imageCover"
+                  [alt]="product.product.title"
+                />
+              </div>
+            </td>
+            <td>
+              <span>{{ product.product.title.split(" ").splice(0, 2).join(" ") }}</span>
+            </td>
+            <td>
+              <span>{{ product.price | currency : "EGP " }}</span>
+            </td>
+            <td>
+              <span>{{ product.count }}</span>
+            </td>
+            <td>
+              <span>{{
+                product.price * product.count | currency : "EGP "
+              }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

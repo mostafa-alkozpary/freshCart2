@@ -1,0 +1,186 @@
+<ng-template class="not-found" #notFound>
+  <div class="py-2 text-center">
+    <p>
+      Sorry products not found in fresh market database
+      <i class="fa-solid fa-shopping-cart"></i>
+    </p>
+  </div>
+</ng-template>
+
+<div
+  *ngIf="categoryName || brandName"
+  class="filter-container bg-secondary-subtle p-2 rounded rounded-2 mb-4"
+>
+  <h2 class="text-center">Filters activated</h2>
+  <div
+    *ngIf="categoryName"
+    class="categoryFilter d-flex justify-content-center gap-2"
+  >
+    <p>Filter by category:</p>
+    <p class="bg-main text-white px-2 py-1 rounded-pill">{{ categoryName }}</p>
+  </div>
+  <div
+    *ngIf="brandName"
+    class="brandFilter d-flex justify-content-center gap-2"
+  >
+    <p>Filter by brand:</p>
+    <p class="bg-main text-white px-2 py-1 rounded-pill">{{ brandName }}</p>
+  </div>
+  <button
+    (click)="resetFilters()"
+    class="btn text-white bg-main d-block mx-auto rounded-pill py-1 px-2"
+  >
+    Clear Filters
+  </button>
+</div>
+
+<div *ngIf="productsList.length; else notFound" class="row g-4">
+  <div class="filter-price">
+    <p class="cursor-pointer m-0" [matMenuTriggerFor]="menu">
+      Filter by price <i class="fa-solid fa-chevron-down"></i> :
+      <span class="bg-main text-white px-2 py-1 rounded-pill">{{
+        priceFilterValue
+      }}</span>
+    </p>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="filterPrice('-price')">
+        Highest To Lowest <i class="fa-solid fa-arrow-down"></i>
+      </button>
+      <button mat-menu-item (click)="filterPrice('+price')">
+        Lowest To Highest <i class="fa-solid fa-arrow-up"></i>
+      </button>
+    </mat-menu>
+  </div>
+  <div *ngFor="let product of productsList" class="col-md-3">
+    <div
+      class="d-block product cursor-pointer overflow-hidden border-main rounded-3 position-relative"
+    >
+      <div
+        (click)="
+          handleWishList(
+            product,
+            product._id,
+            wishListArray.includes(product.id)
+          )
+        "
+        class="position-absolute top-0 end-0 m-2"
+      >
+        <span *ngIf="product.isWishLoading" class="loader"></span>
+        <i
+          *ngIf="!product.isWishLoading"
+          [ngClass]="[
+            wishListArray.includes(product.id)
+              ? 'fa-solid fa-heart-crack text-danger'
+              : 'fa-regular fa-heart text-black'
+          ]"
+          class="fs-5"
+        ></i>
+      </div>
+      <a [routerLink]="['/productdetails', product._id]"
+        ><img
+          class="w-100"
+          src="{{ product.imageCover }}"
+          alt="{{ product.slug }}"
+        />
+        <h2 class="h6 text-center">
+          {{ product.title.split(" ").splice(0, 2).join(" ") }}
+        </h2>
+        <p class="font-sm text-center">
+          Category:
+          <span
+            class="font-vsm text-white px-3 py-2 rounded-pill bg-secondary"
+            >{{ product.category.name }}</span
+          >
+        </p>
+        <div
+          class="price-rating px-2 d-flex justify-content-between align-items-center text-center flex-wrap"
+        >
+          <p>{{ product.price | currency : "EGP" }}</p>
+          <p class="stars">
+            <span>{{ product.ratingsAverage }}</span>
+            <i
+              [ngClass]="[
+                product.ratingsAverage >= 1 ? 'fa-solid' : 'fa-regular'
+              ]"
+              class="fa-star rating-color"
+            ></i>
+            <i
+              [ngClass]="[
+                product.ratingsAverage >= 2 ? 'fa-solid' : 'fa-regular'
+              ]"
+              class="fa-star rating-color"
+            ></i>
+            <i
+              [ngClass]="[
+                product.ratingsAverage >= 3 ? 'fa-solid' : 'fa-regular'
+              ]"
+              class="fa-star rating-color"
+            ></i>
+            <i
+              [ngClass]="[
+                product.ratingsAverage >= 4 ? 'fa-solid' : 'fa-regular'
+              ]"
+              class="fa-star rating-color"
+            ></i>
+            <i
+              [ngClass]="[
+                product.ratingsAverage >= 5 ? 'fa-solid' : 'fa-regular'
+              ]"
+              class="fa-star rating-color"
+            ></i>
+          </p>
+        </div>
+      </a>
+      <div class="add-button">
+        <button
+          *ngIf="product.isCartLoading"
+          type="button"
+          class="mb-2 px-4 py-1 btn bg-main rounded-pill text-white d-block mx-auto font-sm"
+        >
+          <i class="fa-solid fa-spinner fa-spin"></i>
+        </button>
+        <button
+          *ngIf="!product.isCartLoading"
+          (click)="addToCart(product, product.id)"
+          type="button"
+          class="mb-2 px-4 py-1 btn bg-main rounded-pill text-white d-block mx-auto font-sm"
+        >
+          Add To Cart <i class="fa-solid fa-shopping-cart"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="pages.length > 0" class="pagination-nav mt-4">
+  <ul class="pagination d-flex justify-content-center">
+    <li
+      (click)="goToPreviousPage()"
+      *ngIf="currentPage !== 1"
+      class="page-item cursor-pointer"
+    >
+      <a class="page-link text-main">
+        <span>&laquo;</span>
+      </a>
+    </li>
+    <li
+      (click)="goToPage(page)"
+      *ngFor="let page of pages"
+      class="page-item cursor-pointer"
+    >
+      <a
+        [ngClass]="{ 'current-page': page === currentPage }"
+        class="page-link text-main"
+        >{{ page }}</a
+      >
+    </li>
+    <li
+      (click)="goToNextPage()"
+      *ngIf="currentPage !== numberOfPages"
+      class="page-item cursor-pointer"
+    >
+      <a class="page-link text-main">
+        <span>&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</div>

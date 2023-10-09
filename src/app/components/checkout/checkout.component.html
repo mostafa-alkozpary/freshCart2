@@ -1,0 +1,71 @@
+<h2 class="text-center">
+  <i class="fa-solid fa-truck-fast"></i>
+  Check out
+</h2>
+<form class="row" [formGroup]="checkOutForm">
+  <div class="col-md-12 mb-4">
+    <p>Shipping Data</p>
+    <div class="address-field text-center mb-2">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Please enter your address</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="Address"
+          formControlName="address"
+        />
+        <mat-error *ngIf="checkOutForm.get('address')?.getError('required')"
+          >address is required</mat-error
+        >
+        <mat-error *ngIf="checkOutForm.get('address')?.getError('minLength')"
+          >please enter a valid address</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="phone-field text-center mb-2">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Please enter your phone number</mat-label>
+        <input
+          matInput
+          type="tel"
+          placeholder="phone number"
+          formControlName="phone"
+        />
+        <mat-error *ngIf="checkOutForm.get('phone')?.getError('required')"
+          >phone is required</mat-error
+        >
+        <mat-error *ngIf="checkOutForm.get('phone')?.getError('pattern')"
+          >please enter a valid phone number</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="city-field text-center mb-2">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Please enter your city</mat-label>
+        <input matInput type="text" placeholder="city" formControlName="city" />
+        <mat-error *ngIf="checkOutForm.get('city')?.getError('required')"
+          >city is required</mat-error
+        >
+        <mat-error *ngIf="checkOutForm.get('city')?.getError('minLength')"
+          >please enter a valid city</mat-error
+        >
+      </mat-form-field>
+    </div>
+  </div>
+</form>
+<div class="buttons d-flex justify-content-between align-items-center">
+  <button
+    (click)="handleOfflinePay(checkOutForm)"
+    class="d-block w-auto me-auto btn bg-main text-white border-0"
+    [disabled]="!checkOutForm.valid"
+  >
+    Pay on delivery <i class="fa-solid fa-truck"></i>
+  </button>
+  <button
+    (click)="handleOnlinePay(checkOutForm)"
+    class="d-block w-auto ms-auto btn bg-main text-white border-0"
+    [disabled]="!checkOutForm.valid"
+  >
+    Pay online <i class="fa-brands fa-cc-visa"></i>
+  </button>
+</div>

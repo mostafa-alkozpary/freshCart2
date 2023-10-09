@@ -1,0 +1,8 @@
+.padding-container {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.min-vh {
+  min-height: 75vh;
+}

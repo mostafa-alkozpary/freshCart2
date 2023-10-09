@@ -1,0 +1,64 @@
+<ng-template #noWishList>
+  <div class="py-3 bg-secondary-subtle text-center">
+    <span class="h5 d-block mb-2"
+      >No products in your wishlist <i class="fa-solid fa-heart-broken"></i
+    ></span>
+    <a class="btn bg-main text-white py-2 px-3" routerLink="/home"
+      >Continue Shopping <i class="fa-solid fa-shopping-cart"></i
+    ></a>
+  </div>
+</ng-template>
+
+<div *ngIf="products.length > 0; else noWishList" class="content">
+  <h2 class="text-center">My wishlist <i class="fa-solid fa-heart"></i></h2>
+  <div class="table-responsive">
+    <table class="table table-striped text-center table-responsive-sm">
+      <thead class="table-secondary">
+        <tr>
+          <th></th>
+          <th></th>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Stock status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="align-middle" *ngFor="let product of products">
+          <td>
+            <i
+              (click)="deleteProductFromWishList(product._id)"
+              class="fa-solid fa-trash cursor-pointer"
+            ></i>
+          </td>
+          <td>
+            <div class="image-container">
+              <img
+                class="w-100"
+                [src]="product.imageCover"
+                [alt]="product.title"
+              />
+            </div>
+          </td>
+          <td>
+            <span>{{ product.title.split(" ").splice(0, 2).join(" ") }}</span>
+          </td>
+          <td>
+            <span>{{ product.price | currency : "EGP " }}</span>
+          </td>
+          <td>
+            <span>{{ product.quantity }} in stock</span>
+          </td>
+          <td>
+            <button
+              (click)="addProductToCart(product._id)"
+              class="btn bg-main text-white"
+            >
+              Add to cart <i class="fa-solid fa-cart-shopping"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
